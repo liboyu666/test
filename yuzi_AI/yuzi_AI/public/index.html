@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的测试网站</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .info-box {
+            background-color: #e9f5ff;
+            border: 1px solid #b3e0ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .success-message {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vercel 部署测试</h1>
+        <div class="info-box">
+            <p>当前时间：<span id="currentTime">加载中...</span></p>
+            <p>当前用户：<span id="currentUser">加载中...</span></p>
+        </div>
+        <p class="success-message">如果你看到这个页面，说明部署成功了！🎉</p>
+    </div>
+
+    <script>
+        function updateTime() {
+            fetch('/api/time')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('currentTime').textContent = data.time;
+                    document.getElementById('currentUser').textContent = data.user;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('currentTime').textContent = '获取时间失败';
+                });
+        }
+
+        // 首次加载更新时间
+        updateTime();
+        // 每秒更新一次时间
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>
